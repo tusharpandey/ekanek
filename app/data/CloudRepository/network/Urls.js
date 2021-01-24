@@ -1,0 +1,5 @@
+export const API_KEY = "2fd41b49fedfd589dc265350521ab539"
+export const BASE_URL = "https://api.flickr.com/services/rest?method=flickr.photos.search&tags="
+export const LEFT_URL = "&api_key=2fd41b49fedfd589dc265350521ab539&format=json&per_page=24&page="
+export const JSON_CALLBACK = "&nojsoncallback=1"
+export const FLICKER_IMAGES = "https://api.flickr.com/services/rest?method=flickr.photos.search&tags=mountains&api_key=2fd41b49fedfd589dc265350521ab539&format=json&per_page=10&nojsoncallback=1"
