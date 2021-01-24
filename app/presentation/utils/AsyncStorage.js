@@ -1,15 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { v4 as uuidv4 } from 'uuid';
-import { isEmptyString } from './Utils';
+import { isEmptyArray, isEmptyString, isObjectEmpty } from './Utils';
 
 const SEARCH_JSON = "search_json_obj"
 
 export async function storeSearch(searchKey) {
     try {
         let existingSearchJson = await getSearchJson()
-
         const isExist = existingSearchJson.filter((item) => { return item.title == searchKey });
-        if (!isEmptyString(isExist)) return
+        if (!isEmptyArray(isExist)) return
 
         let objectToPush = {
             id: uuidv4(),
@@ -18,7 +17,7 @@ export async function storeSearch(searchKey) {
         existingSearchJson.push(objectToPush)
         await AsyncStorage.setItem(SEARCH_JSON, JSON.stringify(existingSearchJson))
     } catch (e) {
-        console.log("error on store search");
+        console.log("error storeSearch");
     }
 }
 
@@ -28,6 +27,30 @@ export async function getSearchJson() {
         let parsedJsonObject = JSON.parse(json)
         return parsedJsonObject != null ? parsedJsonObject : [];
     } catch (e) {
-        console.log("error on read search");
+        console.log("error getSearchJson");
     }
+}
+
+export async function storeSearchKeyResponse(searchKey, searchResponse) {
+    try {
+        if (isEmptyString(searchKey) || searchResponse == {}) return
+        let existingSavedResponse = await getSearchKeyResponse(searchKey)
+        if (!isObjectEmpty(existingSavedResponse)) return
+        await AsyncStorage.setItem(searchKey, JSON.stringify(searchResponse))
+    } catch (e) {
+        console.log("error storeSearchKeyResponse" + e);
+    }
+}
+
+export async function getSearchKeyResponse(searchKey) {
+    try {
+        if (isEmptyString(searchKey)) return {}
+        let json = await AsyncStorage.getItem(searchKey)
+        let parsedJsonObject = JSON.parse(json)
+        return parsedJsonObject != null ? parsedJsonObject : {};
+
+    } catch (e) {
+        console.log("error getSearchKeyResponse");
+    }
+
 }

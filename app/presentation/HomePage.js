@@ -7,7 +7,7 @@ import InputComponent from './utils/InputComponent';
 import { storeSearch } from './utils/AsyncStorage';
 import SearchSuggestion from './suggestions/SearchSuggestion';
 import { isEmptyString } from './utils/Utils';
-import FlickerImagesGrid from '../imagesGrid/FlickerImagesGrid';
+import FlickerImagesGrid from './imagesGrid/FlickerImagesGrid';
 
 function HomePage(props) {
 
