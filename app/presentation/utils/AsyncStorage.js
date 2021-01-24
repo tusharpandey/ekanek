@@ -1,17 +1,21 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { v4 as uuidv4 } from 'uuid';
+import { isEmptyString } from './Utils';
 
 const SEARCH_JSON = "search_json_obj"
 
 export async function storeSearch(searchKey) {
     try {
         let existingSearchJson = await getSearchJson()
+
+        const isExist = existingSearchJson.filter((item) => { return item.title == searchKey });
+        if (!isEmptyString(isExist)) return
+
         let objectToPush = {
             id: uuidv4(),
             title: searchKey,
         }
         existingSearchJson.push(objectToPush)
-        // console.log("existingSearchJson : " + JSON.stringify(existingSearchJson));
         await AsyncStorage.setItem(SEARCH_JSON, JSON.stringify(existingSearchJson))
     } catch (e) {
         console.log("error on store search");

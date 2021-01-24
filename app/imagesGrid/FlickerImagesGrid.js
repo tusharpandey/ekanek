@@ -4,10 +4,7 @@ import { FlatGrid } from 'react-native-super-grid';
 import GetFlickerImages from '../domain/GetFlickerImages';
 import { isEmptyArray, isEmptyString, isObjectEmpty } from '../presentation/utils/Utils';
 import { XYRatio } from '../presentation/utils/XYRatio';
-import {
-    CachedImage,
-    ImageCacheProvider
-} from 'react-native-cached-image';
+import { CachedImage } from "react-native-img-cache";
 
 let xyRatio = new XYRatio()
 
@@ -34,6 +31,8 @@ function FlickerImagesGrid(props) {
         })
     }, [props.searchText, pageNumber])
 
+    useEffect(() => { setPageNumber(1) }, [props.shouldResetPageNumber])
+
     let getFlickerImageUrl = (props) => {
         let farmId = props.farm
         let server_id = props.server
@@ -56,17 +55,12 @@ function FlickerImagesGrid(props) {
             data={isEmptyArray(flickerImages) ? [] : flickerImages}
             renderItem={({ item }) => (
                 <View style={{ margin: 5 }}>
-                    <CachedImage style={{ width: props.itemDimension - 10, height: props.itemDimension - 5 }}
-                        source={{
-                            uri: getFlickerImageUrl(item),
-                        }}
-                    />
-                    {/* <Image
+                    <CachedImage
                         style={{ width: props.itemDimension - 10, height: props.itemDimension - 5 }}
                         source={{
                             uri: getFlickerImageUrl(item),
                         }}
-                    /> */}
+                    />
                 </View>)}
         />)
 }

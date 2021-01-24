@@ -16,6 +16,7 @@ function HomePage(props) {
     const [itemDimension, setItemDimension] = useState(itemdimension.GRID_2_ITEM_DIMENSION)
     const [searchText, setSearchingText] = useState("")
     const [suggestionSelectionTxt, setSuggestionSelectionTxt] = useState("")
+    const [shouldResetPageNumber, resetPageNumber] = useState(false)
 
     useEffect(() => {
         createAppHeader(props, onOptionPress)
@@ -35,6 +36,7 @@ function HomePage(props) {
     }
 
     let onSubmit = (text) => {
+        resetPageNumber(!shouldResetPageNumber)
         setInputFieldSuggestionsStatus(false)
         if (isEmptyString(text)) return
         storeSearch(text)
@@ -42,6 +44,7 @@ function HomePage(props) {
     }
 
     let onSearchSuggestionItemPress = (text) => {
+        resetPageNumber(!shouldResetPageNumber)
         setInputFieldSuggestionsStatus(false)
         if (isEmptyString(text)) return
         setSearchingText(text)
@@ -67,6 +70,7 @@ function HomePage(props) {
             <SearchSuggestion onItemPress={onSearchSuggestionItemPress} />}
 
         {!shouldShowInputFieldSuggestions && <FlickerImagesGrid
+            shouldResetPageNumber={shouldResetPageNumber}
             searchText={searchText}
             itemDimension={itemDimension} />}
 

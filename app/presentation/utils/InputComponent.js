@@ -19,12 +19,11 @@ function InputComponent(props) {
                 style={styles.icon} />
 
             <TextInput
-                value={props.text}
+                defaultValue={props.text}
                 style={styles.inputComponent}
                 onSubmitEditing={(event) => onSubmit(event)}
                 underlineColorAndroid="transparent"
                 placeholder={"Search Images"}
-                onChangeText={text => setText(text)}
                 placeholderTextColor="#9a73ef"
                 autoCapitalize="none"
                 onFocus={() => props.onFocus()}
